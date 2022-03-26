@@ -1,0 +1,51 @@
+.__main {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+
+  @media only screen and (max-width: $breakpoint-tablet-lg) {
+    min-height: 100%;
+  }
+}
+
+.__main::-webkit-scrollbar {
+  width: 1px;
+  @media only screen and (max-width: $breakpoint-tablet-lg) {
+    width: 3px;
+  }
+}
+
+.__main::-webkit-scrollbar-track {
+  background-color: var(--offGrey);
+}
+
+.__main::-webkit-scrollbar-thumb {
+  background-color: rgb(187, 187, 187);
+
+  @media only screen and (max-width: $breakpoint-tablet-lg) {
+    background-color: rgb(187, 187, 187);
+    // background-color: var(--mc-blue);
+  }
+
+  border-radius: 20px;
+}
+
+.__main::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+}
+
+.__main::-webkit-scrollbar-button {
+  background-color: transparent;
+}
+
+.profileBar {
+  z-index: 1000;
+  background-color: rgba(83, 83, 83, 0.226);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  // margin: 0rem 2.5rem ;
+  border-radius: 0px 0px 10px 10px;
+  position: sticky;
+  top: 0;
+  display: none;
+}

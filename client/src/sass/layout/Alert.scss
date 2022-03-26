@@ -1,0 +1,90 @@
+.alertContainer {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  max-height: calc(100vh - 4rem);
+  width: max-content;
+  overflow-y: scroll;
+  padding-right: 2rem;
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+
+  @media only screen and (max-width: $breakpoint-tablet-lg) {
+    // left: unset !important;
+    // right: 2rem !important;
+    // min-width: 40vw !important;
+    // width: max-content !important;
+    left: 1rem;
+  }
+
+  &::-webkit-scrollbar {
+    width: 1px;
+    @media only screen and (max-width: $breakpoint-tablet-lg) {
+      width: 3px;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+
+    @media only screen and (max-width: $breakpoint-tablet-lg) {
+      background-color: transparent;
+      // background-color: var(--mc-blue);
+    }
+
+    border-radius: 20px;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-button {
+    background-color: transparent;
+  }
+
+  .alert {
+    padding: 1.6rem;
+    background-color: rgba(99, 99, 99, 0.185);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    width: max-content;
+    // max-width: 85vw;
+    // position: fixed;
+    @media only screen and (max-width: $breakpoint-tablet-lg) {
+      font-size: 0.7rem;
+      padding: 1rem;
+      // background-color: var(--mc-blue);
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    &.-error {
+      border: 1px solid rgba(226, 226, 226, 0.267);
+    }
+
+    button.deleteAlert {
+      appearance: none;
+      -webkit-appearance: none;
+      background-color: transparent;
+      color: white;
+      border: none;
+      background-color: grey;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      margin-left: 1rem;
+      cursor: pointer;
+      i {
+      }
+    }
+  }
+}

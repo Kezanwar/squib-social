@@ -1,0 +1,23 @@
+:root {
+  // colors
+  --bgColor: #353535;
+  --bodyText: #e9e9e9;
+  --lightGrey: rgb(211, 211, 211);
+  --offGrey: rgb(97, 97, 97);
+  // multi-colors
+  // --mc-blue: #14d8ff;
+  // --mc-blue: #069985;
+  --mc-blue: #ee8762;
+  // --mc-blue: #0cb69f;
+  //   --mc-blue: #c394ff;
+  --mc-green: #1fe6a4;
+  --mc-red: #ff7e57;
+  --mc-yellow: #ffaa3c;
+  --mc-purple: #8f59ff;
+}
+
+$breakpoint-desktop-lg: 1600px;
+$breakpoint-tablet-lg: 1024px;
+$breakpoint-tablet-sml: 768px;
+$breakpoint-phone-lg: 530px;
+$breakpoint-phone-sml: 400px;
