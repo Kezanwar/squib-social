@@ -18,7 +18,7 @@ const Alert = (props) => {
         alerts !== null && alerts.length > 0
           ? {}
           : {
-              width: '40rem',
+              width: '27rem',
               height: '3rem',
               pointerEvents: 'none',
               alignItems: 'flex-start',
@@ -32,8 +32,8 @@ const Alert = (props) => {
             return (
               <motion.div
                 layout
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{
                   duration: 0.15,
