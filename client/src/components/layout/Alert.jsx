@@ -18,7 +18,7 @@ const Alert = (props) => {
         alerts !== null && alerts.length > 0
           ? {}
           : {
-              width: '27rem',
+              width: '18rem',
               height: '3rem',
               pointerEvents: 'none',
               alignItems: 'flex-start',

@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { REGISTER_SUCCESS, REGISTER_FAILED } from '../actions/types'
-import { HEADERS } from '../utilities/axiosConfig'
-import { generateAlerts } from '../utilities/utilities'
+import { REGISTER_SUCCESS, REGISTER_FAILED } from './types'
 import { setAlert } from './alert'
+import { HEADERS } from '../utilities/axiosConfig'
 
 // register a user action
 
@@ -26,11 +25,12 @@ export const register =
         payload: res.data,
       })
     } catch (err) {
+      const errData = err.response.data
       dispatch({
         type: REGISTER_FAILED,
       })
-      if (err.response.data.errors) {
-        generateAlerts(err.response.data.errors, setAlert)
-      }
+      errData.errors.forEach((error) => {
+        dispatch(setAlert(error.msg, 'error'))
+      })
     }
   }

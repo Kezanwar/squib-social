@@ -6,11 +6,12 @@ import { HEADERS } from '../../../../utilities/axiosConfig'
 // redux
 import { connect } from 'react-redux'
 import { setAlert } from '../../../../actions/alert'
+import { register } from '../../../../actions/register'
 import propTypes from 'prop-types'
-import { generateAlerts } from '../../../../utilities/utilities'
 
 const Register = (props) => {
-  const { setAlert } = props
+  const { setAlert, register, auth } = props
+  const { token, isAuthenticated } = auth
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -19,17 +20,11 @@ const Register = (props) => {
     passwordtwo: '',
   })
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     // console.log(form)
     // return
     e.preventDefault()
-    const formArray = [
-      form.firstName,
-      form.lastName,
-      form.email,
-      form.password,
-      form.passwordtwo,
-    ]
+    const formArray = [form.firstName, form.lastName, form.email, form.password, form.passwordtwo]
 
     if (formArray.some((inputValues) => inputValues === ''))
       return setAlert('Please fill out the form', 'error')
@@ -38,24 +33,11 @@ const Register = (props) => {
       return setAlert('Passwords do not match', 'error')
     } else {
       const newUser = {
-        name: form.firstName + '' + form.lastName,
+        name: form.firstName + ' ' + form.lastName,
         email: form.email,
         password: form.password,
       }
-      try {
-        const res = await axios({
-          url: 'api/users',
-          method: 'post',
-          data: newUser,
-          headers: HEADERS.POST_NOAUTH,
-        })
-        const token = res.data.token
-        console.log(token)
-      } catch (err) {
-        if (err.response.data.errors) {
-          generateAlerts(err.response.data.errors, setAlert)
-        }
-      }
+      register(newUser)
     }
   }
 
@@ -68,7 +50,9 @@ const Register = (props) => {
     })
   }
 
-  return (
+  return token && isAuthenticated ? (
+    'fak u sammyweammy'
+  ) : (
     <RouteWrapper className={'register'} id="register">
       <div className="__container">
         <h2 className="title">Sign up</h2>
@@ -146,4 +130,8 @@ Register.propTypes = {
   setAlert: propTypes.func.isRequired,
 }
 
-export default connect(null, { setAlert })(Register)
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { setAlert, register })(Register)
