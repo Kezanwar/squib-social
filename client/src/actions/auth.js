@@ -1,9 +1,35 @@
 import axios from 'axios'
-import { REGISTER_SUCCESS, REGISTER_FAILED } from './types'
+import { REGISTER_SUCCESS, REGISTER_FAILED, USER_LOADED } from './types'
 import { setAlert } from './alert'
 import { HEADERS } from '../utilities/axiosConfig'
 
-// register a user action
+// @action loadUser
+// @desc Loads a user upon app.js mount
+
+export const loadUser = () => async (dispatch) => {
+  try {
+    const res = await axios({
+      url: 'api/auth',
+      method: 'get',
+      headers: HEADERS.AUTH(),
+    })
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    })
+  } catch (err) {
+    const errData = err.response.data
+    // dispatch({
+    //   type: REGISTER_FAILED,
+    // })
+    errData.errors.forEach((error) => {
+      dispatch(setAlert(error.msg, 'error'))
+    })
+  }
+}
+
+// @action register
+// @dec Registers a user and then logs them in
 
 export const register =
   ({ name, email, password }) =>

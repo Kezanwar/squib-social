@@ -12,6 +12,7 @@ import SquibRoutes from './components/main/routes/SquibRoutes'
 import { Provider } from 'react-redux'
 import store from './store'
 import Alert from './components/layout/Alert'
+import { HEADERS } from './utilities/axiosConfig'
 
 const App = () => {
   const location = useLocation()
@@ -24,6 +25,17 @@ const App = () => {
   const classes = () => {
     return isIOS && isMobile ? 'App iosMob' : 'App'
   }
+
+  console.log(HEADERS.AUTH, HEADERS.POST_AUTH)
+  // useEffect(() => {
+  //   first
+
+  // ---------- make loadUser redux get req here ------------
+
+  //   // return () => {
+  //   //   second
+  //   // }
+  // }, [third])
 
   return (
     <div className={mobNavVis ? `${classes()} mobNavVis` : `${classes()}`}>

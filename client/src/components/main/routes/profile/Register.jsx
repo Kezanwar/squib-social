@@ -6,8 +6,9 @@ import { HEADERS } from '../../../../utilities/axiosConfig'
 // redux
 import { connect } from 'react-redux'
 import { setAlert } from '../../../../actions/alert'
-import { register } from '../../../../actions/register'
+import { register } from '../../../../actions/auth'
 import propTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 
 const Register = (props) => {
   const { setAlert, register, auth } = props
@@ -21,8 +22,6 @@ const Register = (props) => {
   })
 
   const handleSubmit = (e) => {
-    // console.log(form)
-    // return
     e.preventDefault()
     const formArray = [form.firstName, form.lastName, form.email, form.password, form.passwordtwo]
 
@@ -50,8 +49,12 @@ const Register = (props) => {
     })
   }
 
+  console.log(token, isAuthenticated)
+
+  const navigate = useNavigate()
+
   return token && isAuthenticated ? (
-    'fak u sammyweammy'
+    navigate('/profile')
   ) : (
     <RouteWrapper className={'register'} id="register">
       <div className="__container">
@@ -128,6 +131,7 @@ const Register = (props) => {
 
 Register.propTypes = {
   setAlert: propTypes.func.isRequired,
+  register: propTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({

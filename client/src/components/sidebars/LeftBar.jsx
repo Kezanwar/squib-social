@@ -9,30 +9,18 @@ const LeftBar = (props) => {
   const updateRoute = (e) => {
     const val = e.target.dataset.value
     handleNavRoute(val)
-    navigate(val === 'home' ? '/' : val)
+    navigate(val)
   }
 
   return (
-    <motion.aside
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      layout
-      className="__leftBar"
-    >
+    <motion.aside transition={{ duration: 0.3, ease: 'easeOut' }} layout className="__leftBar">
       <motion.h1 className="logo-text">squib</motion.h1>
-      <motion.h1
-        transition={{ duration: 0.3, ease: 'easeOut' }}
-        layout
-        className="logo-text mob"
-      >
+      <motion.h1 transition={{ duration: 0.3, ease: 'easeOut' }} layout className="logo-text mob">
         s{mobNavVis ? 'quib' : ''}
       </motion.h1>
 
       <DesktopNav navRoute={navRoute} updateRoute={updateRoute} />
-      <MobNav
-        navRoute={navRoute}
-        updateRoute={updateRoute}
-        mobNavVis={mobNavVis}
-      />
+      <MobNav navRoute={navRoute} updateRoute={updateRoute} mobNavVis={mobNavVis} />
 
       {/* <p className="devMsg">developed by <span>kez anwar</span></p> */}
       <motion.button
@@ -52,14 +40,11 @@ export default LeftBar
 const DesktopNav = (props) => {
   const { navRoute, updateRoute } = props
   return (
-    <motion.nav
-      className="desktopNav"
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-    >
+    <motion.nav className="desktopNav" transition={{ duration: 0.3, ease: 'easeOut' }}>
       <motion.button
         onClick={updateRoute}
-        data-value={'/home'}
-        data-visible={navRoute === '/home' ? 'true' : 'false'}
+        data-value={'/'}
+        data-visible={navRoute === '/' ? 'true' : 'false'}
         className="navBtn"
       >
         <p>Home </p> <i class="fa-solid fa-house-chimney-window"></i>
@@ -91,11 +76,7 @@ const DesktopNav = (props) => {
 const MobNav = (props) => {
   const { navRoute, updateRoute, mobNavVis } = props
   return (
-    <motion.nav
-      layout
-      className="mobileNav"
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-    >
+    <motion.nav layout className="mobileNav" transition={{ duration: 0.25, ease: 'easeOut' }}>
       <motion.button
         onClick={updateRoute}
         data-value={'/home'}
