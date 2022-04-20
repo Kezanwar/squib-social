@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const LeftBar = (props) => {
-  const { handleMobNavVis, mobNavVis, navRoute, handleNavRoute } = props
+  const { handleMobNavVis, mobNavVis, navRoute, handleNavRoute, auth } = props
   const navigate = useNavigate()
 
   const updateRoute = (e) => {
@@ -12,6 +13,11 @@ const LeftBar = (props) => {
     navigate(val)
   }
 
+  const logout = () => {
+    alert('logout')
+  }
+
+  console.log(auth)
   return (
     <motion.aside transition={{ duration: 0.3, ease: 'easeOut' }} layout className="__leftBar">
       <motion.h1 className="logo-text">squib</motion.h1>
@@ -20,7 +26,13 @@ const LeftBar = (props) => {
       </motion.h1>
 
       <DesktopNav navRoute={navRoute} updateRoute={updateRoute} />
-      <MobNav navRoute={navRoute} updateRoute={updateRoute} mobNavVis={mobNavVis} />
+      <MobNav
+        auth={auth}
+        logout={logout}
+        navRoute={navRoute}
+        updateRoute={updateRoute}
+        mobNavVis={mobNavVis}
+      />
 
       {/* <p className="devMsg">developed by <span>kez anwar</span></p> */}
       <motion.button
@@ -35,10 +47,19 @@ const LeftBar = (props) => {
   )
 }
 
-export default LeftBar
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, null)(LeftBar)
 
 const DesktopNav = (props) => {
-  const { navRoute, updateRoute } = props
+  const { navRoute, updateRoute, auth, logout } = props
+  const handleLoginRegisterDataVis = (route) => {
+    if (route === '/login') return true
+    if (route === '/register') return true
+    else return false
+  }
   return (
     <motion.nav className="desktopNav" transition={{ duration: 0.3, ease: 'easeOut' }}>
       <motion.button
@@ -68,6 +89,16 @@ const DesktopNav = (props) => {
       >
         <p>Profile </p>
         <i class="fa-solid fa-user-pen"></i>
+      </motion.button>
+
+      <motion.button
+        onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
+        data-value={'/login'}
+        data-visible={handleLoginRegisterDataVis(navRoute)}
+        className="navBtn"
+      >
+        <p>{auth && auth.isAuthenticated && auth.user ? 'Sign out' : 'Log in'}</p>
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
       </motion.button>
     </motion.nav>
   )

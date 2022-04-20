@@ -1,4 +1,5 @@
-import { REGISTER_SUCCESS, REGISTER_FAILED, USER_LOADED } from '../actions/types'
+import { REGISTER_SUCCESS, REGISTER_FAILED, USER_LOADED, AUTH_ERROR } from '../actions/types'
+import { AUTH_ACTIONS } from '../utilities/axiosConfig'
 
 const initialState = {
   token: localStorage.getItem('token'),
@@ -19,11 +20,12 @@ function authReducer(state = initialState, action) {
         loading: false,
       }
     case REGISTER_FAILED:
-      localStorage.removeItem('token')
+    case AUTH_ERROR:
+      AUTH_ACTIONS.removeAuthToken()
       return {
         ...state,
         token: null,
-        isAuthenicated: false,
+        isAuthenticated: false,
         loading: false,
       }
     case USER_LOADED:

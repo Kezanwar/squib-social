@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { AnimatePresence, LayoutGroup } from 'framer-motion'
 import { isIOS, isMobile } from 'react-device-detect'
@@ -12,7 +12,7 @@ import SquibRoutes from './components/main/routes/SquibRoutes'
 import { Provider } from 'react-redux'
 import store from './store'
 import Alert from './components/layout/Alert'
-import { HEADERS } from './utilities/axiosConfig'
+import { loadUser } from './actions/auth'
 
 const App = () => {
   const location = useLocation()
@@ -26,16 +26,13 @@ const App = () => {
     return isIOS && isMobile ? 'App iosMob' : 'App'
   }
 
-  console.log(HEADERS.AUTH, HEADERS.POST_AUTH)
-  // useEffect(() => {
-  //   first
+  const reduxState = store.getState()
+  const { auth } = reduxState
+  const [token, setToken] = useState(auth.token)
 
-  // ---------- make loadUser redux get req here ------------
-
-  //   // return () => {
-  //   //   second
-  //   // }
-  // }, [third])
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [token])
 
   return (
     <div className={mobNavVis ? `${classes()} mobNavVis` : `${classes()}`}>

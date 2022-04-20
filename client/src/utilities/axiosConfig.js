@@ -4,7 +4,7 @@ export const AUTH_ACTIONS = {
     else return 'no-token'
   },
   removeAuthToken: function () {
-    window.localStorage.remove('token')
+    localStorage.removeItem('token')
   },
   THIS: function () {
     return this

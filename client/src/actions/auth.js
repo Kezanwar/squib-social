@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { REGISTER_SUCCESS, REGISTER_FAILED, USER_LOADED } from './types'
+import { REGISTER_SUCCESS, REGISTER_FAILED, USER_LOADED, AUTH_ERROR } from './types'
 import { setAlert } from './alert'
 import { HEADERS } from '../utilities/axiosConfig'
 
@@ -11,20 +11,26 @@ export const loadUser = () => async (dispatch) => {
     const res = await axios({
       url: 'api/auth',
       method: 'get',
-      headers: HEADERS.AUTH(),
+      headers: HEADERS.AUTH,
     })
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    })
+    if (res.data) {
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      })
+      return
+    }
+    if (!res.data) {
+      dispatch({
+        type: AUTH_ERROR,
+      })
+    }
   } catch (err) {
-    const errData = err.response.data
-    // dispatch({
-    //   type: REGISTER_FAILED,
-    // })
-    errData.errors.forEach((error) => {
-      dispatch(setAlert(error.msg, 'error'))
-    })
+    if (err?.response?.data?.msg === 'token not valid') {
+      dispatch({
+        type: AUTH_ERROR,
+      })
+    }
   }
 }
 
@@ -51,7 +57,7 @@ export const register =
         payload: res.data,
       })
     } catch (err) {
-      const errData = err.response.data
+      const errData = err?.response?.data
       dispatch({
         type: REGISTER_FAILED,
       })

@@ -49,13 +49,11 @@ const Register = (props) => {
     })
   }
 
-  console.log(token, isAuthenticated)
+  // console.log(token, isAuthenticated)
 
   const navigate = useNavigate()
 
-  return token && isAuthenticated ? (
-    navigate('/profile')
-  ) : (
+  return (
     <RouteWrapper className={'register'} id="register">
       <div className="__container">
         <h2 className="title">Sign up</h2>
