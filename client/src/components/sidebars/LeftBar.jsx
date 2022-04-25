@@ -4,17 +4,24 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const LeftBar = (props) => {
-  const { handleMobNavVis, mobNavVis, navRoute, handleNavRoute, auth } = props
+  const { handleMobNavVis, mobNavVis, auth } = props
   const navigate = useNavigate()
+  const navRoute = window.location.pathname
+  console.log(navRoute)
 
   const updateRoute = (e) => {
     const val = e.target.dataset.value
-    handleNavRoute(val)
     navigate(val)
   }
 
   const logout = () => {
     alert('logout')
+  }
+
+  const handleLoginRegisterDataVis = (route) => {
+    if (route === '/login') return true
+    if (route === '/register') return true
+    else return false
   }
 
   console.log(auth)
@@ -25,13 +32,18 @@ const LeftBar = (props) => {
         s{mobNavVis ? 'quib' : ''}
       </motion.h1>
 
-      <DesktopNav navRoute={navRoute} updateRoute={updateRoute} />
+      <DesktopNav
+        navRoute={navRoute}
+        updateRoute={updateRoute}
+        loginRegisterDataVis={handleLoginRegisterDataVis(navRoute)}
+      />
       <MobNav
         auth={auth}
         logout={logout}
         navRoute={navRoute}
         updateRoute={updateRoute}
         mobNavVis={mobNavVis}
+        loginRegisterDataVis={handleLoginRegisterDataVis(navRoute)}
       />
 
       {/* <p className="devMsg">developed by <span>kez anwar</span></p> */}
@@ -54,12 +66,8 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, null)(LeftBar)
 
 const DesktopNav = (props) => {
-  const { navRoute, updateRoute, auth, logout } = props
-  const handleLoginRegisterDataVis = (route) => {
-    if (route === '/login') return true
-    if (route === '/register') return true
-    else return false
-  }
+  const { navRoute, updateRoute, auth, logout, loginRegisterDataVis } = props
+
   return (
     <motion.nav className="desktopNav" transition={{ duration: 0.3, ease: 'easeOut' }}>
       <motion.button
@@ -94,7 +102,7 @@ const DesktopNav = (props) => {
       <motion.button
         onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
         data-value={'/login'}
-        data-visible={handleLoginRegisterDataVis(navRoute)}
+        data-visible={loginRegisterDataVis}
         className="navBtn"
       >
         <p>{auth && auth.isAuthenticated && auth.user ? 'Sign out' : 'Log in'}</p>
@@ -105,7 +113,7 @@ const DesktopNav = (props) => {
 }
 
 const MobNav = (props) => {
-  const { navRoute, updateRoute, mobNavVis } = props
+  const { navRoute, updateRoute, mobNavVis, loginRegisterDataVis } = props
   return (
     <motion.nav layout className="mobileNav" transition={{ duration: 0.25, ease: 'easeOut' }}>
       <motion.button
@@ -195,6 +203,35 @@ const MobNav = (props) => {
           }}
           layout
           class="fa-solid fa-user-pen"
+        ></motion.i>
+      </motion.button>
+      <motion.button
+        onClick={updateRoute}
+        data-value={'/login'}
+        data-visible={loginRegisterDataVis}
+        className="navBtn"
+      >
+        {mobNavVis ? (
+          <motion.p
+            layout
+            key="lgintext"
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: 0.3,
+            }}
+          >
+            Login{' '}
+          </motion.p>
+        ) : (
+          ''
+        )}
+        <motion.i
+          transition={{
+            duration: 0.3,
+          }}
+          layout
+          class="fa-solid fa-arrow-right-to-bracket"
         ></motion.i>
       </motion.button>
     </motion.nav>

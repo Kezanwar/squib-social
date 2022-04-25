@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import RouteWrapper from '../../../layout/RouteWrapper'
 import { TextField } from '@mui/material'
-import axios from 'axios'
-import { HEADERS } from '../../../../utilities/axiosConfig'
 // redux
 import { connect } from 'react-redux'
 import { setAlert } from '../../../../actions/alert'
@@ -21,7 +19,7 @@ const Register = (props) => {
     passwordtwo: '',
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const formArray = [form.firstName, form.lastName, form.email, form.password, form.passwordtwo]
 
@@ -36,7 +34,7 @@ const Register = (props) => {
         email: form.email,
         password: form.password,
       }
-      register(newUser)
+      register(newUser, () => navigate('/profile'))
     }
   }
 
@@ -115,8 +113,8 @@ const Register = (props) => {
               onChange={handleInput}
             />
           </div>
-          <p className="sub-title signinMsg">
-            Already have an account? <span className="">Sign in</span>
+          <p onClick={() => navigate('/login')} className="sub-title signinMsg">
+            Already have an account? <span className="white-link">Sign in</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Register

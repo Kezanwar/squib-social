@@ -96,6 +96,11 @@
       .signinMsg {
         align-self: center;
         margin-top: 1.5rem;
+        cursor: pointer;
+
+        .white-link {
+          color: white;
+        }
       }
     }
   }

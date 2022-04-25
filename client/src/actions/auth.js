@@ -38,7 +38,7 @@ export const loadUser = () => async (dispatch) => {
 // @dec Registers a user and then logs them in
 
 export const register =
-  ({ name, email, password }) =>
+  ({ name, email, password }, relocate) =>
   async (dispatch) => {
     const newUser = {
       name: name,
@@ -56,6 +56,7 @@ export const register =
         type: REGISTER_SUCCESS,
         payload: res.data,
       })
+      relocate()
     } catch (err) {
       const errData = err?.response?.data
       dispatch({

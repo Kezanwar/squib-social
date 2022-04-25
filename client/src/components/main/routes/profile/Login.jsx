@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { setAlert } from '../../../../actions/alert'
 import propTypes from 'prop-types'
 import { generateAlerts } from '../../../../utilities/utilities'
+import { useNavigate } from 'react-router-dom'
 
 const Login = ({ setAlert }) => {
   const [form, setForm] = useState({
@@ -49,6 +50,7 @@ const Login = ({ setAlert }) => {
       [state]: value,
     })
   }
+  const navigate = useNavigate()
 
   return (
     <RouteWrapper className={'register'} id="register">
@@ -81,8 +83,8 @@ const Login = ({ setAlert }) => {
             />
           </div>
 
-          <p className="sub-title signinMsg">
-            Don't have an account? <span className="">Create an account</span>
+          <p onClick={() => navigate('/register')} className="sub-title signinMsg">
+            Don't have an account? <span className="white-link">Create an account</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Sign in

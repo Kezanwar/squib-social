@@ -19,9 +19,6 @@ const App = () => {
   const [mobNavVis, setMobNavVis] = useState(false)
   const handleMobNavVis = () => setMobNavVis((prev) => !prev)
 
-  const [navRoute, setNavRoute] = useState(location.pathname)
-  const handleNavRoute = (route) => setNavRoute(route)
-
   const classes = () => {
     return isIOS && isMobile ? 'App iosMob' : 'App'
   }
@@ -38,14 +35,9 @@ const App = () => {
     <div className={mobNavVis ? `${classes()} mobNavVis` : `${classes()}`}>
       <Provider store={store}>
         <LayoutGroup>
-          <LeftBar
-            mobNavVis={mobNavVis}
-            handleMobNavVis={handleMobNavVis}
-            navRoute={navRoute}
-            handleNavRoute={handleNavRoute}
-          />
+          <LeftBar mobNavVis={mobNavVis} handleMobNavVis={handleMobNavVis} />
           <Main>
-            <ProfileBar navRoute={navRoute} />
+            <ProfileBar />
             <Alert />
             <AnimatePresence exitBeforeEnter initial={false}>
               <SquibRoutes location={location} />
