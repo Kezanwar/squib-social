@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RouteWrapper from '../../../layout/RouteWrapper'
 import { TextField } from '@mui/material'
 // redux
@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Register = (props) => {
   const { setAlert, register, auth } = props
-  const { token, isAuthenticated } = auth
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -18,7 +18,7 @@ const Register = (props) => {
     password: '',
     passwordtwo: '',
   })
-
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formArray = [form.firstName, form.lastName, form.email, form.password, form.passwordtwo]
@@ -47,9 +47,15 @@ const Register = (props) => {
     })
   }
 
-  // console.log(token, isAuthenticated)
+  const { isAuthenticated, user } = auth
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    if (user) {
+      navigate('/profile')
+    }
+  }, [user])
+
+  // console.log(token, isAuthenticated)
 
   return (
     <RouteWrapper className={'register'} id="register">

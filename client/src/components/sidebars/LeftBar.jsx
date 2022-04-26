@@ -7,7 +7,6 @@ const LeftBar = (props) => {
   const { handleMobNavVis, mobNavVis, auth } = props
   const navigate = useNavigate()
   const navRoute = window.location.pathname
-  console.log(navRoute)
 
   const updateRoute = (e) => {
     const val = e.target.dataset.value
@@ -15,7 +14,7 @@ const LeftBar = (props) => {
   }
 
   const logout = () => {
-    alert('logout')
+    window.localStorage.removeItem('token')
   }
 
   const handleLoginRegisterDataVis = (route) => {
@@ -23,8 +22,6 @@ const LeftBar = (props) => {
     if (route === '/register') return true
     else return false
   }
-
-  console.log(auth)
   return (
     <motion.aside transition={{ duration: 0.3, ease: 'easeOut' }} layout className="__leftBar">
       <motion.h1 className="logo-text">squib</motion.h1>
@@ -36,6 +33,8 @@ const LeftBar = (props) => {
         navRoute={navRoute}
         updateRoute={updateRoute}
         loginRegisterDataVis={handleLoginRegisterDataVis(navRoute)}
+        auth={auth}
+        logout={logout}
       />
       <MobNav
         auth={auth}
@@ -113,7 +112,7 @@ const DesktopNav = (props) => {
 }
 
 const MobNav = (props) => {
-  const { navRoute, updateRoute, mobNavVis, loginRegisterDataVis } = props
+  const { navRoute, updateRoute, mobNavVis, loginRegisterDataVis, auth, logout } = props
   return (
     <motion.nav layout className="mobileNav" transition={{ duration: 0.25, ease: 'easeOut' }}>
       <motion.button
@@ -206,7 +205,7 @@ const MobNav = (props) => {
         ></motion.i>
       </motion.button>
       <motion.button
-        onClick={updateRoute}
+        onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
         data-value={'/login'}
         data-visible={loginRegisterDataVis}
         className="navBtn"
