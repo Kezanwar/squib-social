@@ -6,6 +6,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT_USER,
 } from './types'
 import { setAlert } from './alert'
 import { HEADERS } from '../utilities/axiosConfig'
@@ -99,35 +100,9 @@ export const loginUser = (user, relocate) => async (dispatch) => {
   }
 }
 
-// export const login =
-//   ({ email, password }, relocate) =>
-//   async (dispatch) => {
-//     console.log('hello')
-//     const userDetails = {
-//       email: email,
-//       password: password,
-//     }
-//     try {
-//       const res = await axios({
-//         url: 'api/auth',
-//         method: 'post',
-//         data: userDetails,
-//         headers: HEADERS.POST_NOAUTH,
-//       })
-//       console.log(res.data)
-//       dispatch({
-//         type: LOGIN_SUCCESS,
-//         payload: res.data,
-//       })
-//       relocate()
-//     } catch (err) {
-//       console.log(err.response)
-//       const errData = err?.response?.data
-//       dispatch({
-//         type: LOGIN_FAILED,
-//       })
-//       errData.errors.forEach((error) => {
-//         dispatch(setAlert(error.msg, 'error'))
-//       })
-//     }
-//   }
+export const logoutUser = (relocate) => (dispatch) => {
+  dispatch({
+    type: LOGOUT_USER,
+  })
+  relocate()
+}

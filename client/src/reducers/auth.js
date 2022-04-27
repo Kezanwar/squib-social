@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT_USER,
 } from '../actions/types'
 import { AUTH_ACTIONS } from '../utilities/axiosConfig'
 
@@ -30,6 +31,7 @@ function authReducer(state = initialState, action) {
     case REGISTER_FAILED:
     case AUTH_ERROR:
     case LOGIN_FAILED:
+    case LOGOUT_USER:
       AUTH_ACTIONS.removeAuthToken()
       return {
         ...state,
