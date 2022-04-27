@@ -5,12 +5,8 @@ import { capitalizeFirstLetter } from '../../utilities/utilities'
 const ProfileBar = (props) => {
   const { navRoute } = props
   return (
-    <motion.header
-      layout
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="profileBar"
-    >
-      <p>{capitalizeFirstLetter(navRoute)}</p>
+    <motion.header layout transition={{ duration: 0.3, ease: 'easeOut' }} className="profileBar">
+      <p>{capitalizeFirstLetter(window.location.pathname)}</p>
     </motion.header>
   )
 }

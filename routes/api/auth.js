@@ -11,7 +11,7 @@ const auth = require('../../middleware/auth')
 
 // route GET api/auth
 // @desc
-// @access public
+// @access private
 router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password')
@@ -50,9 +50,7 @@ router.post(
       let user = await User.findOne({ email: email })
       console.log(user)
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'invalid credentials' }] })
+        return res.status(400).json({ errors: [{ msg: 'invalid credentials' }] })
       }
 
       // compare the passwords if they exist
@@ -62,9 +60,7 @@ router.post(
       // if dont exist send an error
 
       if (!isMatch) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'invalid credentials' }] })
+        return res.status(400).json({ errors: [{ msg: 'invalid credentials' }] })
       }
 
       // is user credentials are a match
@@ -78,15 +74,10 @@ router.post(
 
       //  call jwt sign method, poss in the payload, the jwtsecret from our config we created, an argument for optional extra parameters such as expiry, a call back function which allows us to handle any errors that occur or send the response back to user.
 
-      jwt.sign(
-        payload,
-        config.get('jwtSecret'),
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err
-          res.json({ token: token })
-        }
-      )
+      jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err
+        res.json({ token: token, user: { ...user._doc, password: null } })
+      })
     } catch (err) {
       console.error(err)
       res.status(500).send('Server Error')

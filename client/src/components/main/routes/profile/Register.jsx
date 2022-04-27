@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RouteWrapper from '../../../layout/RouteWrapper'
 import { TextField } from '@mui/material'
-import axios from 'axios'
-import { HEADERS } from '../../../../utilities/axiosConfig'
 // redux
 import { connect } from 'react-redux'
 import { setAlert } from '../../../../actions/alert'
+import { register } from '../../../../actions/auth'
 import propTypes from 'prop-types'
-import { generateAlerts } from '../../../../utilities/utilities'
+import { useNavigate } from 'react-router-dom'
 
 const Register = (props) => {
-  const { setAlert } = props
+  const { setAlert, register, auth } = props
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -18,18 +18,10 @@ const Register = (props) => {
     password: '',
     passwordtwo: '',
   })
-
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
-    // console.log(form)
-    // return
     e.preventDefault()
-    const formArray = [
-      form.firstName,
-      form.lastName,
-      form.email,
-      form.password,
-      form.passwordtwo,
-    ]
+    const formArray = [form.firstName, form.lastName, form.email, form.password, form.passwordtwo]
 
     if (formArray.some((inputValues) => inputValues === ''))
       return setAlert('Please fill out the form', 'error')
@@ -38,24 +30,11 @@ const Register = (props) => {
       return setAlert('Passwords do not match', 'error')
     } else {
       const newUser = {
-        name: form.firstName + '' + form.lastName,
+        name: form.firstName + ' ' + form.lastName,
         email: form.email,
         password: form.password,
       }
-      try {
-        const res = await axios({
-          url: 'api/users',
-          method: 'post',
-          data: newUser,
-          headers: HEADERS.POST_NOAUTH,
-        })
-        const token = res.data.token
-        console.log(token)
-      } catch (err) {
-        if (err.response.data.errors) {
-          generateAlerts(err.response.data.errors, setAlert)
-        }
-      }
+      register(newUser, () => navigate('/profile'))
     }
   }
 
@@ -67,6 +46,16 @@ const Register = (props) => {
       [state]: value,
     })
   }
+
+  const { isAuthenticated, user } = auth
+
+  useEffect(() => {
+    if (user) {
+      navigate('/profile')
+    }
+  }, [user])
+
+  // console.log(token, isAuthenticated)
 
   return (
     <RouteWrapper className={'register'} id="register">
@@ -130,8 +119,8 @@ const Register = (props) => {
               onChange={handleInput}
             />
           </div>
-          <p className="sub-title signinMsg">
-            Already have an account? <span className="">Sign in</span>
+          <p onClick={() => navigate('/login')} className="sub-title signinMsg">
+            Already have an account? <span className="white-link">Sign in</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Register
@@ -144,6 +133,11 @@ const Register = (props) => {
 
 Register.propTypes = {
   setAlert: propTypes.func.isRequired,
+  register: propTypes.func.isRequired,
 }
 
-export default connect(null, { setAlert })(Register)
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { setAlert, register })(Register)

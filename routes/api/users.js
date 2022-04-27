@@ -18,10 +18,7 @@ router.post(
   [
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid e-mail').isEmail(),
-    check(
-      'password',
-      'Please enter a password with 6 or more characters'
-    ).isLength({ min: 6 }),
+    check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
   ],
   async (req, res) => {
     console.log(req.body)
@@ -40,9 +37,7 @@ router.post(
       // checking if user exists, if they do then send err
       let user = await User.findOne({ email: email })
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'user already exists' }] })
+        return res.status(400).json({ errors: [{ msg: 'User already exists' }] })
       }
       // if not get users gravatar or a default if doesnt exist
       const avatar = gravatar.url(email, {
@@ -76,15 +71,14 @@ router.post(
 
       //  call jwt sign method, poss in the payload, the jwtsecret from our config we created, an argument for optional extra parameters such as expiry, a call back function which allows us to handle any errors that occur or send the response back to user.
 
-      jwt.sign(
-        payload,
-        config.get('jwtSecret'),
-        { expiresIn: 360000 },
-        (err, token) => {
-          if (err) throw err
-          res.json({ token: token })
-        }
-      )
+      jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
+        if (err) throw err
+
+        res.json({
+          token: token,
+          user: { ...user._doc, password: null },
+        })
+      })
     } catch (err) {
       console.error(err)
       res.status(500).send('Server Error')

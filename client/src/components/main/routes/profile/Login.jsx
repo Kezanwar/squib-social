@@ -1,44 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RouteWrapper from '../../../layout/RouteWrapper'
 import { TextField } from '@mui/material'
-import axios from 'axios'
-import { HEADERS } from '../../../../utilities/axiosConfig'
 // rdux
 import { connect } from 'react-redux'
 import { setAlert } from '../../../../actions/alert'
-import propTypes from 'prop-types'
-import { generateAlerts } from '../../../../utilities/utilities'
+import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../../../../actions/auth'
 
-const Login = ({ setAlert }) => {
+const Login = ({ setAlert, loginUser, auth }) => {
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
-
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const formArray = [form.email, form.password]
-    if (form.email === '' || form.password === '')
-      return setAlert('Please fill the form out', 'error')
-    const user = {
+    if (form.email === '' || form.password === '') {
+      setAlert('Please fill the form out', 'error')
+      return
+    }
+    const userDetails = {
       email: form.email,
       password: form.password,
     }
-    // console.log(user)
-    try {
-      const res = await axios({
-        url: 'api/auth',
-        method: 'post',
-        data: user,
-        headers: HEADERS.POST_NOAUTH,
-      })
-      console.log(res.data)
-    } catch (err) {
-      console.log(err.response.data)
-      if (err.response.data.errors) {
-        generateAlerts(err.response.data.errors, setAlert)
-      }
-    }
+
+    loginUser(userDetails, () => navigate('/profile'))
   }
 
   const handleInput = (e) => {
@@ -49,6 +36,14 @@ const Login = ({ setAlert }) => {
       [state]: value,
     })
   }
+
+  const { isAuthenticated, user } = auth
+
+  useEffect(() => {
+    if (user) {
+      navigate('/profile')
+    }
+  }, [user])
 
   return (
     <RouteWrapper className={'register'} id="register">
@@ -81,8 +76,8 @@ const Login = ({ setAlert }) => {
             />
           </div>
 
-          <p className="sub-title signinMsg">
-            Don't have an account? <span className="">Create an account</span>
+          <p onClick={() => navigate('/register')} className="sub-title signinMsg">
+            Don't have an account? <span className="white-link">Create an account</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Sign in
@@ -93,4 +88,13 @@ const Login = ({ setAlert }) => {
   )
 }
 
-export default connect(null, { setAlert })(Login)
+Login.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { setAlert, loginUser })(Login)

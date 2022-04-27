@@ -4,7 +4,7 @@ const initialState = []
 
 function alertReducer(state = initialState, action) {
   const { type, payload } = action
-  console.log(payload)
+  // console.log(payload)
   switch (type) {
     case SET_ALERT:
       if (state.length > 0 && state[0].msg === payload.msg) return

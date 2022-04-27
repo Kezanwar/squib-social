@@ -1,13 +1,14 @@
 .alertContainer {
+  z-index: 1000;
   position: fixed;
   top: 2rem;
-  left: 2rem;
+  right: 2rem;
   max-height: calc(100vh - 4rem);
   width: max-content;
-  overflow-y: scroll;
-  padding-right: 2rem;
+  // overflow-y: scroll;
+  // padding-right: 2rem;
   display: flex;
-  align-items: left;
+  align-items: flex-end;
   flex-direction: column;
 
   @media only screen and (max-width: $breakpoint-tablet-lg) {
@@ -15,7 +16,7 @@
     // right: 2rem !important;
     // min-width: 40vw !important;
     // width: max-content !important;
-    left: 1rem;
+    // left: 1rem;
   }
 
   &::-webkit-scrollbar {
