@@ -21,10 +21,13 @@ button,
 label,
 input {
   font-family: 'Inter', sans-serif !important;
+  background-color: black;
 }
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-y: hidden;
+  height: 100vh;
 }
 
 img,

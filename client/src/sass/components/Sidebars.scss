@@ -1,6 +1,5 @@
 .__leftBar {
   position: relative;
-
   @media only screen and (max-width: $breakpoint-tablet-lg) {
     justify-content: space-between;
   }
@@ -169,6 +168,7 @@
 
 .__rightBar {
   position: relative;
+  height: 100vh;
   .news-box-1 {
     height: 12rem;
     .title {

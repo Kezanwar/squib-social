@@ -2,6 +2,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
+  // display: none;
 
   @media only screen and (max-width: $breakpoint-tablet-lg) {
     min-height: 100%;
