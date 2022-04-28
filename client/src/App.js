@@ -25,11 +25,10 @@ const App = () => {
 
   const reduxState = store.getState()
   const { auth } = reduxState
-  const [token, setToken] = useState(auth.token)
 
   useEffect(() => {
     store.dispatch(loadUser())
-  }, [token])
+  }, [])
 
   return (
     <div className={mobNavVis ? `${classes()} mobNavVis` : `${classes()}`}>
