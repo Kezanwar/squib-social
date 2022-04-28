@@ -9,11 +9,20 @@ import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../../../../actions/auth'
 
 const Login = ({ setAlert, loginUser, auth }) => {
+  const navigate = useNavigate()
+  const { isAuthenticated, user } = auth
+
+  useEffect(() => {
+    if (user) {
+      navigate('/profile')
+    }
+  }, [])
+
   const [form, setForm] = useState({
     email: '',
     password: '',
   })
-  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (form.email === '' || form.password === '') {
@@ -36,14 +45,6 @@ const Login = ({ setAlert, loginUser, auth }) => {
       [state]: value,
     })
   }
-
-  const { isAuthenticated, user } = auth
-
-  useEffect(() => {
-    if (user) {
-      navigate('/profile')
-    }
-  }, [user])
 
   return (
     <RouteWrapper className={'register'} id="register">

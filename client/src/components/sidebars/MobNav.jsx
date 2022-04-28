@@ -64,65 +64,71 @@ const MobNav = (props) => {
           class="fa-solid fa-magnifying-glass"
         ></motion.i>
       </motion.button>
+      {auth && auth.isAuthenticated && auth.user && (
+        <motion.button
+          onClick={updateRoute}
+          data-value={'/profile'}
+          data-visible={navRoute === '/profile' ? 'true' : 'false'}
+          className="navBtn"
+        >
+          {mobNavVis ? (
+            <motion.p
+              layout
+              key="profiletext"
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.3,
+              }}
+            >
+              Profile{' '}
+            </motion.p>
+          ) : (
+            ''
+          )}
+          <motion.i
+            transition={{
+              duration: 0.3,
+            }}
+            layout
+            class="fa-solid fa-user-pen"
+          ></motion.i>
+        </motion.button>
+      )}
 
-      <motion.button
-        onClick={updateRoute}
-        data-value={'/profile'}
-        data-visible={navRoute === '/profile' ? 'true' : 'false'}
-        className="navBtn"
-      >
-        {mobNavVis ? (
-          <motion.p
-            layout
-            key="profiletext"
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
+      {auth && auth.isAuthenticated && auth.user ? (
+        ''
+      ) : (
+        <motion.button
+          onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
+          data-value={'/login'}
+          data-visible={loginRegisterDataVis}
+          className="navBtn"
+        >
+          {mobNavVis ? (
+            <motion.p
+              layout
+              key="lgintext"
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.3,
+              }}
+            >
+              {auth && auth.isAuthenticated && auth.user ? 'Log Out' : 'Log In'}
+            </motion.p>
+          ) : (
+            ''
+          )}
+          <motion.i
             transition={{
               duration: 0.3,
             }}
-          >
-            Profile{' '}
-          </motion.p>
-        ) : (
-          ''
-        )}
-        <motion.i
-          transition={{
-            duration: 0.3,
-          }}
-          layout
-          class="fa-solid fa-user-pen"
-        ></motion.i>
-      </motion.button>
-      <motion.button
-        onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
-        data-value={'/login'}
-        data-visible={loginRegisterDataVis}
-        className="navBtn"
-      >
-        {mobNavVis ? (
-          <motion.p
             layout
-            key="lgintext"
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: 0.3,
-            }}
-          >
-            Login{' '}
-          </motion.p>
-        ) : (
-          ''
-        )}
-        <motion.i
-          transition={{
-            duration: 0.3,
-          }}
-          layout
-          class="fa-solid fa-arrow-right-to-bracket"
-        ></motion.i>
-      </motion.button>
+            class="fa-solid fa-arrow-right-to-bracket"
+          ></motion.i>
+        </motion.button>
+      )}
     </motion.nav>
   )
 }

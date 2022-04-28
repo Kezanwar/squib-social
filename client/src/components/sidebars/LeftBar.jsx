@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import DesktopNav from './DesktopNav'
 import MobNav from './MobNav'
+import { logoutUser } from '../../actions/auth'
 
 const LeftBar = (props) => {
-  const { handleMobNavVis, mobNavVis, auth } = props
+  const { handleMobNavVis, mobNavVis, auth, logoutUser } = props
   const navigate = useNavigate()
   const navRoute = window.location.pathname
 
@@ -15,7 +16,9 @@ const LeftBar = (props) => {
     navigate(val)
   }
 
-  const logout = () => {}
+  const logout = () => {
+    logoutUser(() => navigate('/'))
+  }
 
   const handleLoginRegisterDataVis = (route) => {
     if (route === '/login') return true
@@ -61,4 +64,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 })
 
-export default connect(mapStateToProps, null)(LeftBar)
+export default connect(mapStateToProps, { logoutUser })(LeftBar)

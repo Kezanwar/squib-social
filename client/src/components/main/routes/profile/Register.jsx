@@ -10,7 +10,12 @@ import { useNavigate } from 'react-router-dom'
 
 const Register = (props) => {
   const { setAlert, register, auth } = props
-
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (user) {
+      navigate('/profile')
+    }
+  }, [])
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -18,7 +23,7 @@ const Register = (props) => {
     password: '',
     passwordtwo: '',
   })
-  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formArray = [form.firstName, form.lastName, form.email, form.password, form.passwordtwo]
@@ -48,12 +53,6 @@ const Register = (props) => {
   }
 
   const { isAuthenticated, user } = auth
-
-  useEffect(() => {
-    if (user) {
-      navigate('/profile')
-    }
-  }, [user])
 
   // console.log(token, isAuthenticated)
 
