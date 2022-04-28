@@ -71,7 +71,7 @@ const Profile = (props) => {
         <div className="nameAndAvatarContainer">
           <h4 className="name">
             {profileFields.firstName + ' ' + profileFields.lastName}
-            <p onClick={() => logoutUser(() => navigate('/home'))} className="sign-out">
+            <p onClick={() => logoutUser(() => navigate('/login'))} className="sign-out">
               ✌🏼 Sign Out
             </p>
           </h4>

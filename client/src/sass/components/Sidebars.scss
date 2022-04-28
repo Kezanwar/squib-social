@@ -6,6 +6,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  // @media only screen and (max-width: $breakpoint-tablet-lg) {
+  //   border: 1px solid grey;
+  //   border-left: none;
+  //   // border-top: 1px solid grey;
+  //   // border-bottom: 1px solid grey;
+  //   border-radius: 0px 7px 7px 0px;
+  // }
 
   &::after {
     content: '';
@@ -18,7 +25,8 @@
     top: 50%;
     transform: translateY(-50%);
     @media only screen and (max-width: $breakpoint-tablet-lg) {
-      // height: 90vh;
+      background-color: grey;
+      // display: none;
     }
   }
 
@@ -168,7 +176,6 @@
 
 .__rightBar {
   position: relative;
-  height: 100vh;
   .news-box-1 {
     height: 12rem;
     .title {
