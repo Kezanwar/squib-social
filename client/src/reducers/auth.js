@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILED,
   LOGOUT_USER,
+  API_LOADING,
 } from '../actions/types'
 import { AUTH_ACTIONS } from '../utilities/axiosConfig'
 
@@ -19,6 +20,11 @@ const initialState = {
 function authReducer(state = initialState, action) {
   const { type, payload } = action
   switch (type) {
+    case API_LOADING:
+      return {
+        ...state,
+        loading: true,
+      }
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token)
@@ -38,6 +44,7 @@ function authReducer(state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
+        user: null,
       }
     case USER_LOADED:
       return {

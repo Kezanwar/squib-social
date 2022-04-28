@@ -25,15 +25,17 @@ const DesktopNav = (props) => {
         <i class="fa-solid fa-magnifying-glass"></i>
       </motion.button>
 
-      <motion.button
-        onClick={updateRoute}
-        data-value={'/profile'}
-        data-visible={navRoute === '/profile' ? 'true' : 'false'}
-        className="navBtn"
-      >
-        <p>Profile </p>
-        <i class="fa-solid fa-user-pen"></i>
-      </motion.button>
+      {auth && auth.isAuthenticated && auth.user && (
+        <motion.button
+          onClick={updateRoute}
+          data-value={'/profile'}
+          data-visible={navRoute === '/profile' ? 'true' : 'false'}
+          className="navBtn"
+        >
+          <p>Profile </p>
+          <i class="fa-solid fa-user-pen"></i>
+        </motion.button>
+      )}
 
       <motion.button
         onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
