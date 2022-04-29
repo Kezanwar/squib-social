@@ -69,12 +69,6 @@ const Profile = (props) => {
           }
           setAlert(err?.response?.data?.msg, 'error')
         })
-
-      // setProfileFields((prev) => ({
-      //   ...prev,
-      //   firstName: { ...prev.firstName, value: firstName },
-      //   lastName: { ...prev.lastName, value: lastName },
-      // }))
     }
   }, [user, isAuthenticated])
 

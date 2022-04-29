@@ -87,18 +87,18 @@
     .__nameCountContainer {
       display: flex;
       justify-content: space-between;
+      margin-bottom: 1rem;
       .name,
       .count {
         font-size: 0.9rem;
         font-weight: 400;
         letter-spacing: -1px;
-        color: rgb(182, 182, 182);
-        margin-bottom: 1rem;
+        color: rgb(163, 163, 163);
       }
 
       .count {
         font-size: 0.75rem;
-        font-weight: 500;
+        font-weight: 400;
       }
     }
 
