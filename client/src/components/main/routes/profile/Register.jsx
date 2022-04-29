@@ -119,7 +119,7 @@ const Register = (props) => {
             />
           </div>
           <p onClick={() => navigate('/login')} className="sub-title signinMsg">
-            Already have an account? <span className="white-link">Sign in</span>
+            Already have an account? <span className="blue-link">Sign in 🤙🏽</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Register

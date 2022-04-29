@@ -15,6 +15,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
   useEffect(() => {
     if (user) {
       navigate('/profile')
+      return
     }
   }, [])
 
@@ -78,7 +79,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
           </div>
 
           <p onClick={() => navigate('/register')} className="sub-title signinMsg">
-            Don't have an account? <span className="white-link">Create an account</span>
+            Don't have an account? <span className="blue-link">Create an account 🤙🏽</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Sign in
