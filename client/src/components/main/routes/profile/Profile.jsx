@@ -24,6 +24,8 @@ const Profile = (props) => {
     avatar: 'No Avatar',
   })
 
+  const [profLoading, setProfLoading] = useState(true)
+
   useEffect(() => {
     if (!user && !isAuthenticated && !loading) {
       navigate('/login')
@@ -53,6 +55,7 @@ const Profile = (props) => {
             twitter: { ...prev.twitter, value: twitter ? twitter : prev.twitter.value },
             linkedin: { ...prev.linkedin, value: linkedin ? linkedin : prev.linkedin.value },
           }))
+          setProfLoading(false)
         })
         .catch((err) => {
           if (err?.response?.data?.msg === 'There is no profile for this user') {
@@ -61,6 +64,7 @@ const Profile = (props) => {
               firstName: { ...prev.firstName, value: firstName },
               lastName: { ...prev.lastName, value: lastName },
             }))
+            setProfLoading(false)
             return
           }
           setAlert(err?.response?.data?.msg, 'error')
@@ -130,6 +134,7 @@ const Profile = (props) => {
   const handleUpdateProfile = () => {}
 
   if (!user && !isAuthenticated && loading) return <Loading />
+  if (profLoading) return <Loading />
   return (
     <RouteWrapper id={'profile'} className={'profile'}>
       <div className="yourProfileContainer">
