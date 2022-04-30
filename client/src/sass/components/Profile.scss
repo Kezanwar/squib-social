@@ -1,4 +1,38 @@
 .profile {
+  .saveChangesContainer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 1rem 3rem;
+    // width: max-content;
+    @media only screen and (max-width: $breakpoint-tablet-lg) {
+      margin: 0rem 1rem;
+      justify-content: space-between;
+    }
+    &.second {
+      margin: 1rem 3rem 3rem 3rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      letter-spacing: -1px;
+      margin-right: 1rem;
+    }
+
+    button.saveChanges {
+      appearance: none;
+      border: none;
+      background-color: transparent;
+
+      padding: 0.9rem;
+      border-radius: 50px;
+      border: solid 1px;
+      font-size: 0.9rem;
+      letter-spacing: -1px;
+      cursor: pointer;
+    }
+  }
+
   .yourProfileContainer {
     display: flex;
     align-items: center;
