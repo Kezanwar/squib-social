@@ -23,8 +23,46 @@ const Profile = (props) => {
     email: 'No Email',
     avatar: 'No Avatar',
   })
-
   const [profLoading, setProfLoading] = useState(true)
+  const [profileFields, setProfileFields] = useState({
+    firstName: {
+      value: '',
+      max: 12,
+    },
+    lastName: {
+      value: '',
+      max: 12,
+    },
+    status: {
+      value: 'Online',
+      max: 20,
+    },
+    bio: {
+      value: '',
+      max: 120,
+    },
+    website: {
+      value: '',
+      max: 30,
+    },
+    location: {
+      value: '',
+      max: 30,
+    },
+    instagram: {
+      value: '',
+      max: 20,
+    },
+    twitter: {
+      value: '',
+      max: 20,
+    },
+    linkedin: {
+      value: '',
+      max: 20,
+    },
+  })
+  const [unsavedChangesCheck, setUnsavedChangesCheck] = useState(false)
 
   useEffect(() => {
     if (!user && !isAuthenticated && !loading) {
@@ -69,55 +107,11 @@ const Profile = (props) => {
           }
           setAlert(err?.response?.data?.msg, 'error')
         })
-
-      // setProfileFields((prev) => ({
-      //   ...prev,
-      //   firstName: { ...prev.firstName, value: firstName },
-      //   lastName: { ...prev.lastName, value: lastName },
-      // }))
     }
   }, [user, isAuthenticated])
 
-  const [profileFields, setProfileFields] = useState({
-    firstName: {
-      value: '',
-      max: 12,
-    },
-    lastName: {
-      value: '',
-      max: 12,
-    },
-    status: {
-      value: 'Online',
-      max: 20,
-    },
-    bio: {
-      value: '',
-      max: 120,
-    },
-    website: {
-      value: '',
-      max: 30,
-    },
-    location: {
-      value: '',
-      max: 30,
-    },
-    instagram: {
-      value: '',
-      max: 20,
-    },
-    twitter: {
-      value: '',
-      max: 20,
-    },
-    linkedin: {
-      value: '',
-      max: 20,
-    },
-  })
-
   const handleProfileFieldChange = (e) => {
+    const stateIndex = e.target.dataset.index
     const stateKey = e.target.dataset.value
     const value = e.target.value
     if (value.length - 1 >= profileFields[stateKey].max) return
@@ -125,13 +119,18 @@ const Profile = (props) => {
       ...prev,
       [stateKey]: { ...prev[stateKey], value: value },
     }))
+    if (!unsavedChangesCheck) {
+      setUnsavedChangesCheck(true)
+    }
   }
 
   const setPlaceholderText = (name) => {
     return `Add your ${name}...`
   }
 
-  const handleUpdateProfile = () => {}
+  const handleUpdateProfileChanges = () => {
+    setUnsavedChangesCheck(false)
+  }
 
   if (!user && !isAuthenticated && loading) return <Loading />
   if (profLoading) return <Loading />
@@ -149,6 +148,15 @@ const Profile = (props) => {
           <img className="avatar" src={userObj.avatar} alt="avatar" />
         </div>
       </div>
+
+      {unsavedChangesCheck && (
+        <div className="saveChangesContainer">
+          <p>You have unsaved changes...</p>
+          <button onClick={handleUpdateProfileChanges} className="blue-link saveChanges">
+            Save your changes 🚀
+          </button>
+        </div>
+      )}
 
       {profileInputDataArr.map((inputData, index) => {
         return (
@@ -179,6 +187,14 @@ const Profile = (props) => {
           />
         )
       })}
+      {unsavedChangesCheck && (
+        <div className="saveChangesContainer second">
+          <p>You have unsaved changes...</p>
+          <button onClick={handleUpdateProfileChanges} className="blue-link saveChanges">
+            Save your changes 🚀
+          </button>
+        </div>
+      )}
     </RouteWrapper>
   )
 }

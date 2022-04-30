@@ -36,16 +36,19 @@ const DesktopNav = (props) => {
           <i class="fa-solid fa-user-pen"></i>
         </motion.button>
       )}
-
-      <motion.button
-        onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
-        data-value={'/login'}
-        data-visible={loginRegisterDataVis}
-        className="navBtn"
-      >
-        <p>{auth && auth.isAuthenticated && auth.user ? 'Sign out' : 'Log in'}</p>
-        <i class="fa-solid fa-arrow-right-to-bracket"></i>
-      </motion.button>
+      {auth && auth.isAuthenticated && auth.user ? (
+        ''
+      ) : (
+        <motion.button
+          onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
+          data-value={'/login'}
+          data-visible={loginRegisterDataVis}
+          className="navBtn"
+        >
+          <p>{auth && auth.isAuthenticated && auth.user ? 'Sign out' : 'Log in'}</p>
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </motion.button>
+      )}
     </motion.nav>
   )
 }
