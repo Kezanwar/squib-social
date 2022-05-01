@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERT } from './types'
+import { ALERT } from './types'
 import { v4 } from 'uuid'
 
 // @action setAlert
@@ -7,7 +7,7 @@ import { v4 } from 'uuid'
 export const setAlert = (msg, alertType) => (dispatch) => {
   const id = v4()
   dispatch({
-    type: SET_ALERT,
+    type: ALERT.SET_ALERT,
     payload: { msg, alertType, id },
   })
 }
@@ -17,7 +17,7 @@ export const setAlert = (msg, alertType) => (dispatch) => {
 
 export const removeAlert = (id) => (dispatch) => {
   dispatch({
-    type: REMOVE_ALERT,
+    type: ALERT.REMOVE_ALERT,
     payload: id,
   })
 }
