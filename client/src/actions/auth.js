@@ -1,13 +1,5 @@
 import axios from 'axios'
-import {
-  REGISTER_SUCCESS,
-  REGISTER_FAILED,
-  USER_LOADED,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  LOGOUT_USER,
-} from './types'
+import { AUTH } from './types'
 import { setAlert } from './alert'
 import { HEADERS } from '../utilities/axiosConfig'
 
@@ -23,20 +15,20 @@ export const loadUser = () => async (dispatch) => {
     })
     if (res.data) {
       dispatch({
-        type: USER_LOADED,
+        type: AUTH.USER_LOADED,
         payload: res.data,
       })
       return
     }
     if (!res.data) {
       dispatch({
-        type: AUTH_ERROR,
+        type: AUTH.AUTH_ERROR,
       })
     }
   } catch (err) {
     if (err?.response?.data?.msg === 'token not valid') {
       dispatch({
-        type: AUTH_ERROR,
+        type: AUTH.AUTH_ERROR,
       })
     }
   }
@@ -61,14 +53,14 @@ export const register =
         headers: HEADERS.POST_NOAUTH,
       })
       dispatch({
-        type: REGISTER_SUCCESS,
+        type: AUTH.REGISTER_SUCCESS,
         payload: res.data,
       })
       relocate()
     } catch (err) {
       const errData = err?.response?.data
       dispatch({
-        type: REGISTER_FAILED,
+        type: AUTH.REGISTER_FAILED,
       })
       errData.errors.forEach((error) => {
         dispatch(setAlert(error.msg, 'error'))
@@ -85,14 +77,14 @@ export const loginUser = (user, relocate) => async (dispatch) => {
       headers: HEADERS.POST_NOAUTH,
     })
     dispatch({
-      type: LOGIN_SUCCESS,
+      type: AUTH.LOGIN_SUCCESS,
       payload: res.data,
     })
     relocate()
   } catch (err) {
     const errData = err?.response?.data
     dispatch({
-      type: LOGIN_FAILED,
+      type: AUTH.LOGIN_FAILED,
     })
     errData.errors.forEach((error) => {
       dispatch(setAlert(error.msg, 'error'))
@@ -102,7 +94,7 @@ export const loginUser = (user, relocate) => async (dispatch) => {
 
 export const logoutUser = (relocate) => (dispatch) => {
   dispatch({
-    type: LOGOUT_USER,
+    type: AUTH.LOGOUT_USER,
   })
   relocate()
 }
