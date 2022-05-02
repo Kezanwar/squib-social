@@ -1,17 +1,43 @@
 import Helmet from 'react-helmet'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { capitalizeFirstLetter } from '../utilities/utilities'
+import { logoutUser } from '../actions/auth'
+import { connect } from 'react-redux'
+import { headTitles } from './headTitles'
 
-export default function SquibHelmet(props) {
+function SquibHelmet(props) {
+  const { auth } = props
   const location = useLocation()
-  //   console.dir(location)
-  const pathTitle =
-    location.pathname === '/' ? 'Home' : capitalizeFirstLetter(location.pathname.split('/')[1])
+  const heads = headTitles(location)
+
+  const renderTitles = (auth, path) => {
+    switch (path) {
+      case 'Profile':
+        return heads.myprofile(auth)
+      case '':
+        return heads.home
+      case 'Discover':
+      case 'Login':
+      case 'Register':
+        return heads.squibAndRoute()
+      default:
+        break
+    }
+    return
+  }
+
+  console.log(heads.path1())
+
   return (
     <Helmet>
       <meta charSet="utf-8" />
-      <title>Squib | {pathTitle}</title>
+      <title>{renderTitles(auth, heads.path1())}</title>
     </Helmet>
   )
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { logoutUser })(SquibHelmet)

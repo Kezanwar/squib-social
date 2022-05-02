@@ -13,6 +13,7 @@ import { Provider } from 'react-redux'
 import store from './store'
 import Alert from './components/layout/Alert'
 import { loadUser } from './actions/auth'
+import SquibHelmet from './components/SquibHelmet'
 
 const App = () => {
   const location = useLocation()
@@ -33,6 +34,7 @@ const App = () => {
   return (
     <div className={mobNavVis ? `${classes()} mobNavVis` : `${classes()}`}>
       <Provider store={store}>
+        <SquibHelmet />
         <LayoutGroup>
           <LeftBar mobNavVis={mobNavVis} handleMobNavVis={handleMobNavVis} />
           <Main>
