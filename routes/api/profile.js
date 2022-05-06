@@ -37,8 +37,8 @@ router.post(
   [
     auth,
     [
-      check('status', 'Status is required').not().isEmpty(),
-      check('bio', 'Bio is required').not().isEmpty(),
+      // check('status', 'Status is required').not().isEmpty(),
+      // check('bio', 'Bio is required').not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -48,22 +48,21 @@ router.post(
     const { bio, status, website, location, username, twitter, instagram, linkedin } = req.body
 
     // build profile object
-    const profileFields = {}
 
-    profileFields.user = req.user.id
-    if (bio) profileFields.bio = bio
-    if (status) profileFields.status = status
-    if (website) profileFields.website = website
-    if (location) profileFields.location = location
-    if (username) profileFields.username = username
+    const profileFields = {
+      user: req.user.id,
+      bio,
+      status,
+      website,
+      location,
+      username,
+      social: {
+        twitter,
+        instagram,
+        linkedin,
+      },
+    }
 
-    profileFields.social = {}
-
-    if (twitter) profileFields.social.twitter = twitter
-    if (instagram) profileFields.social.instagram = instagram
-    if (linkedin) profileFields.social.linkedin = linkedin
-
-    // console.log(profileFields)
     try {
       let profile = await Profile.findOne({ user: req.user.id })
       if (profile) {

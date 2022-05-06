@@ -33,6 +33,10 @@ const Profile = (props) => {
       value: '',
       max: 12,
     },
+    userName: {
+      value: '',
+      max: 20,
+    },
     status: {
       value: 'Online',
       max: 20,
@@ -80,11 +84,13 @@ const Profile = (props) => {
       })
         .then((res) => {
           console.log(res.data)
-          const { status, bio, website, location, instagram, twitter, linkedin } = res.data
+          const { username, status, bio, website, location, instagram, twitter, linkedin } =
+            res.data
           setProfileFields((prev) => ({
             ...prev,
             firstName: { ...prev.firstName, value: firstName },
             lastName: { ...prev.lastName, value: lastName },
+            userName: { ...prev.userName, value: username },
             status: { ...prev.status, value: status ? status : prev.status.value },
             bio: { ...prev.bio, value: bio ? bio : prev.bio.value },
             website: { ...prev.website, value: website ? website : prev.website.value },
@@ -128,8 +134,32 @@ const Profile = (props) => {
     return `Add your ${name}...`
   }
 
-  const handleUpdateProfileChanges = () => {
-    setUnsavedChangesCheck(false)
+  const handleUpdateProfileChanges = async () => {
+    const { bio, userName, status, website, location, instagram, twitter, linkedin } = profileFields
+    const newProfData = {
+      bio: bio.value,
+      username: userName.value,
+      status: status.value,
+      website: website.value,
+      location: location.value,
+      instagram: instagram.value,
+      twitter: twitter.value,
+      linkedin: linkedin.value,
+    }
+    console.log(newProfData)
+    try {
+      const res = axios({
+        url: 'api/profile',
+        method: 'post',
+        headers: HEADERS.AUTH,
+        data: newProfData,
+      })
+      console.log(res.data)
+      setUnsavedChangesCheck(false)
+    } catch (error) {
+      console.log(error.response.data)
+      setUnsavedChangesCheck(false)
+    }
   }
 
   if (!user && !isAuthenticated && loading) return <Loading />
@@ -150,12 +180,7 @@ const Profile = (props) => {
       </div>
 
       {unsavedChangesCheck && (
-        <div className="saveChangesContainer">
-          <p>You have unsaved changes...</p>
-          <button onClick={handleUpdateProfileChanges} className="blue-link saveChanges">
-            Save your changes 🚀
-          </button>
-        </div>
+        <SaveChangesBtn handleUpdateProfileChanges={handleUpdateProfileChanges} />
       )}
 
       {profileInputDataArr.map((inputData, index) => {
@@ -188,12 +213,7 @@ const Profile = (props) => {
         )
       })}
       {unsavedChangesCheck && (
-        <div className="saveChangesContainer second">
-          <p>You have unsaved changes...</p>
-          <button onClick={handleUpdateProfileChanges} className="blue-link saveChanges">
-            Save your changes 🚀
-          </button>
-        </div>
+        <SaveChangesBtn handleUpdateProfileChanges={handleUpdateProfileChanges} />
       )}
     </RouteWrapper>
   )
@@ -222,6 +242,18 @@ const InputContainer = (props) => {
   )
 }
 
+const SaveChangesBtn = (props) => {
+  const { handleUpdateProfileChanges } = props
+  return (
+    <div className="saveChangesContainer">
+      <p>You have unsaved changes...</p>
+      <button onClick={handleUpdateProfileChanges} className="blue-link saveChanges">
+        Save your changes 🚀
+      </button>
+    </div>
+  )
+}
+
 const profileInputDataArr = [
   {
     name: 'First Name',
@@ -233,6 +265,12 @@ const profileInputDataArr = [
     dataValue: 'lastName',
     max: 12,
   },
+  {
+    name: 'Username',
+    dataValue: 'userName',
+    max: 20,
+  },
+
   {
     name: 'Status',
     dataValue: 'status',
