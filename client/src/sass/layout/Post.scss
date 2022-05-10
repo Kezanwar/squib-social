@@ -1,7 +1,9 @@
 .post {
   width: 100%;
   margin: auto;
+  opacity: 0;
   @include card;
+  animation: postFade 100ms ease forwards 100ms;
   @media only screen and (max-width: $breakpoint-tablet-lg) {
     // width: 85.5%;
   }
@@ -18,8 +20,8 @@
     }
 
     h5.username {
-      font-size: 1.4rem;
-      font-weight: 400;
+      font-size: 1.3rem;
+      font-weight: 500;
       letter-spacing: -1px;
     }
   }
@@ -27,6 +29,7 @@
   .content {
     min-height: 75px;
     margin-bottom: 2rem;
+    line-height: 1.7;
     // border: 1px solid grey;
     // border-radius: 5px;
     // padding: 1rem;
@@ -36,11 +39,28 @@
     display: flex;
 
     button.metric {
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-weight: 500;
       @include circleBtn;
 
+      i {
+        margin-right: 0.4rem;
+      }
       &:first-of-type {
         margin-right: 1rem;
       }
     }
+  }
+}
+
+@keyframes postFade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
