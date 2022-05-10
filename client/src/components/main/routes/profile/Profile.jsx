@@ -83,7 +83,6 @@ const Profile = (props) => {
         headers: HEADERS.AUTH,
       })
         .then((res) => {
-          console.log(res.data)
           const { username, status, bio, website, location, instagram, twitter, linkedin } =
             res.data
           setProfileFields((prev) => ({

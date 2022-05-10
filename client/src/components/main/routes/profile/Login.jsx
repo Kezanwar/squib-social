@@ -17,7 +17,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
       navigate('/profile')
       return
     }
-  }, [])
+  }, [user])
 
   const [form, setForm] = useState({
     email: '',

@@ -2,13 +2,24 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 const MobNav = (props) => {
-  const { navRoute, updateRoute, mobNavVis, loginRegisterDataVis, auth, logout } = props
+  const {
+    navRoute,
+    updateRoute,
+    mobNavVis,
+    loginRegisterDataVis,
+    auth,
+    logout,
+  } = props
   return (
-    <motion.nav layout className="mobileNav" transition={{ duration: 0.25, ease: 'easeOut' }}>
+    <motion.nav
+      layout
+      className="mobileNav"
+      transition={{ duration: 0.25, ease: 'easeOut' }}
+    >
       <motion.button
         onClick={updateRoute}
-        data-value={'/home'}
-        data-visible={navRoute === '/home' ? 'true' : 'false'}
+        data-value={'/'}
+        data-visible={navRoute === '/' ? 'true' : 'false'}
         className="navBtn"
       >
         {mobNavVis ? (
@@ -100,7 +111,9 @@ const MobNav = (props) => {
         ''
       ) : (
         <motion.button
-          onClick={auth && auth.isAuthenticated && auth.user ? logout : updateRoute}
+          onClick={
+            auth && auth.isAuthenticated && auth.user ? logout : updateRoute
+          }
           data-value={'/login'}
           data-visible={loginRegisterDataVis}
           className="navBtn"

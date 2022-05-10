@@ -3,6 +3,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 2.5rem 3rem;
+  border-bottom: 1px solid grey;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 
   @media only screen and (max-width: $breakpoint-tablet-lg) {
     padding: 2rem 1rem;
@@ -23,24 +26,22 @@
     }
   }
 
-  .name {
-    font-weight: 300;
-    font-size: 1.4rem;
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column;
-    letter-spacing: -1px;
+  // .name {
+  //   font-weight: 300;
+  //   font-size: 1.4rem;
+  //   align-items: flex-end;
+  //   display: flex;
+  //   flex-direction: column;
+  //   letter-spacing: -1px;
 
-    @media only screen and (max-width: $breakpoint-tablet-lg) {
-      margin-right: 1rem;
-      font-size: 0.9rem;
-    }
+  //   @media only screen and (max-width: $breakpoint-tablet-lg) {
+  //     margin-right: 1rem;
+  //     font-size: 0.9rem;
+  //   }
 
-    button {
-      @include circleBtn;
-      margin-top: 0.75rem;
-      font-weight: 400;
-      font-size: 0.8rem;
-    }
+  button {
+    @include circleBtn;
+    font-weight: 400;
+    font-size: 0.8rem;
   }
 }

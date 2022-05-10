@@ -26,8 +26,6 @@ function SquibHelmet(props) {
     return
   }
 
-  console.log(heads.path1())
-
   return (
     <Helmet>
       <meta charSet="utf-8" />

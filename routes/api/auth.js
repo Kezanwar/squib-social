@@ -33,7 +33,7 @@ router.post(
     check('password', 'Password is required').exists(),
   ],
   async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
 
     // generating errors from validator and handling them with res
     const errors = validationResult(req)
@@ -80,6 +80,7 @@ router.post(
       })
     } catch (err) {
       console.error(err)
+
       res.status(500).send('Server Error')
     }
   }
