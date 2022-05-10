@@ -19,32 +19,40 @@ function Post(props) {
     auth,
   } = props
 
-  const [postLikes, setLikes] = useState(likes)
+  const [postLikes, setPostLikes] = useState(likes)
+  const [liked, setLiked] = useState(false)
 
-  useEffect(() => {}, [])
-
-  const hasUserLiked = () => {
-    const likesByUser = postLikes.filter(
-      (like) => like.user.toString() === auth.user.id
-    )
-    if (likesByUser.length < 1) return false
-    else return true
+  const hasUserLiked = (likesArr) => {
+    if (!auth || !auth.user) return false
+    else {
+      const likesByUser = likesArr.filter(
+        (like) => like.user.toString() === auth.user._id
+      )
+      if (likesByUser.length < 1) return false
+      else return true
+    }
   }
 
-  const handleLike = () => {
-    const hasLiked = hasUserLiked()
+  useEffect(() => {
+    if (auth && auth.user) {
+      const hasLiked = hasUserLiked(postLikes)
+      if (hasLiked) setLiked(true)
+    }
+  }, [auth])
+
+  const handleLike = async () => {
     try {
+      const hasLiked = hasUserLiked(postLikes)
       let url
       if (hasLiked) url = `api/posts/unlike/${postID}`
       if (!hasLiked) url = `api/posts/like/${postID}`
-      const res = axios({
+      const res = await axios({
         url: url,
         method: 'put',
         headers: HEADERS.AUTH,
       })
-      console.log(res.data)
-      // setLike((prev) => !prev.like)
-      // setLikeCount((prev) => (like ? prev.likeCount - 1 : prev.likeCount + 1))
+      setPostLikes(res.data)
+      setLiked(hasUserLiked(res.data) ? true : false)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -64,7 +72,8 @@ function Post(props) {
       <div className="metricsContainer">
         {' '}
         <button onClick={handleLike} className="metric blue-link">
-          {likes.length} Likes
+          {liked ? 'liked' : 'notliked'} {postLikes.length}{' '}
+          {postLikes.length === 1 ? 'Like' : 'Likes'}
         </button>
         <button className="metric blue-link">{comments.length} Comments</button>
       </div>
