@@ -10,12 +10,14 @@ import { useNavigate } from 'react-router-dom'
 
 const Register = (props) => {
   const { setAlert, register, auth } = props
+  const { user, isAuthenticated } = auth
   const navigate = useNavigate()
   useEffect(() => {
     if (user) {
       navigate('/profile')
     }
-  }, [])
+  }, [user])
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -51,8 +53,6 @@ const Register = (props) => {
       [state]: value,
     })
   }
-
-  const { isAuthenticated, user } = auth
 
   // console.log(token, isAuthenticated)
 

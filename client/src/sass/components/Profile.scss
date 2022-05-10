@@ -20,16 +20,7 @@
     }
 
     button.saveChanges {
-      appearance: none;
-      border: none;
-      background-color: transparent;
-
-      padding: 0.9rem;
-      border-radius: 50px;
-      border: solid 1px;
-      font-size: 0.9rem;
-      letter-spacing: -1px;
-      cursor: pointer;
+      @include circleBtn;
     }
   }
 

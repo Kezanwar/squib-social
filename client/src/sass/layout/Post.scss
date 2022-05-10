@@ -1,9 +1,46 @@
 .post {
-    min-height: 275px;
-    width: 100%;
-    margin: auto;
-    @include card;
-    @media only screen and (max-width: $breakpoint-tablet-lg) {
-      // width: 85.5%;
+  width: 100%;
+  margin: auto;
+  @include card;
+  @media only screen and (max-width: $breakpoint-tablet-lg) {
+    // width: 85.5%;
+  }
+
+  .userInfoContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    img.avatar {
+      height: 4rem;
+      border-radius: 50px;
+      margin-right: 1rem;
     }
+
+    h5.username {
+      font-size: 1.4rem;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+  }
+
+  .content {
+    min-height: 75px;
+    margin-bottom: 2rem;
+    // border: 1px solid grey;
+    // border-radius: 5px;
+    // padding: 1rem;
+  }
+
+  .metricsContainer {
+    display: flex;
+
+    button.metric {
+      @include circleBtn;
+
+      &:first-of-type {
+        margin-right: 1rem;
+      }
+    }
+  }
 }

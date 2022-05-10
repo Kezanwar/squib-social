@@ -15,7 +15,7 @@
 
 @mixin card {
   border-bottom: 1px solid var(--offGrey);
-  cursor: pointer;
+  // cursor: pointer;
   padding: 1.5rem 2rem;
 }
 
@@ -50,4 +50,17 @@
   background: linear-gradient(to left, #ffb392 40%, #d1ffff 57%, #9fdce6 81%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@mixin circleBtn {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+
+  padding: 0.9rem;
+  border-radius: 50px;
+  border: solid 1px;
+  font-size: 0.9rem;
+  letter-spacing: -1px;
+  cursor: pointer;
 }
