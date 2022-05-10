@@ -69,6 +69,13 @@ div {
   color: rgb(255, 255, 255);
 }
 
+a {
+  text-decoration: none;
+  &:active {
+    text-decoration: none;
+  }
+}
+
 .App {
   display: grid;
   height: 100vh;

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { HEADERS } from '../../utilities/axiosConfig'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 function Post(props) {
   const {
@@ -58,6 +59,11 @@ function Post(props) {
     }
   }
 
+  const getProfileLink = () => {
+    if (auth && auth.user && auth.user._id === postOwnerID) return '/profile'
+    else return `/profile/${postOwnerID}`
+  }
+
   return (
     <motion.article
       transition={{ duration: 0, ease: 'easeOut' }}
@@ -67,10 +73,12 @@ function Post(props) {
       // animate={{ opacity: 1, x: 0, y: 0 }}
       // exit={{ opacity: 0, x: 0, y: 0 }}
     >
-      <div className="userInfoContainer">
-        <img className="avatar" src={avatar} alt="userImg" />
-        <h5 className="username">{username}</h5>
-      </div>
+      <Link to={getProfileLink()}>
+        <div className="userInfoContainer">
+          <img className="avatar" src={avatar} alt="userImg" />
+          <h5 className="username">{username}</h5>
+        </div>
+      </Link>
       <p className="content">{content}</p>
       <div className="metricsContainer">
         {' '}
