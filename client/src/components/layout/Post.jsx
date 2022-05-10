@@ -60,9 +60,12 @@ function Post(props) {
 
   return (
     <motion.article
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0, ease: 'easeOut' }}
       layout
       className="post"
+      // initial={{ opacity: 0, x: 0, y: 50 }}
+      // animate={{ opacity: 1, x: 0, y: 0 }}
+      // exit={{ opacity: 0, x: 0, y: 0 }}
     >
       <div className="userInfoContainer">
         <img className="avatar" src={avatar} alt="userImg" />
@@ -71,11 +74,17 @@ function Post(props) {
       <p className="content">{content}</p>
       <div className="metricsContainer">
         {' '}
-        <button onClick={handleLike} className="metric blue-link">
-          {liked ? 'liked' : 'notliked'} {postLikes.length}{' '}
-          {postLikes.length === 1 ? 'Like' : 'Likes'}
+        <button onClick={handleLike} className="metric  blue-link">
+          <i
+            style={liked ? { color: 'rgb(255, 115, 115)' } : {}}
+            class="fa-solid fa-heart"
+          ></i>
+          {postLikes.length} {postLikes.length === 1 ? 'Like' : 'Likes'}
         </button>
-        <button className="metric blue-link">{comments.length} Comments</button>
+        <button className="metric blue-link ">
+          <i class="fa-solid fa-comment-dots"></i>
+          {comments.length} Comments
+        </button>
       </div>
     </motion.article>
   )

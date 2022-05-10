@@ -120,3 +120,8 @@ div {
 .blue-link {
   color: rgb(101, 193, 255) !important;
 }
+
+.loadingScreen {
+  height: webkit-fill-available;
+  min-height: 110vh;
+}

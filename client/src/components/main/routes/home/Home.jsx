@@ -7,6 +7,7 @@ import { HEADERS } from '../../../../utilities/axiosConfig'
 import { capitalizeFirstLetter } from '../../../../utilities/utilities'
 import RouteWrapper from '../../../layout/RouteWrapper'
 import Post from '../../../layout/Post'
+import Loading from '../../Loading'
 
 const Home = (props) => {
   const { auth } = props
@@ -44,19 +45,24 @@ const Home = (props) => {
         </div>
       </div>
 
-      {posts.map((post) => (
-        <Post
-          likes={post.likes}
-          comments={post.comments}
-          username={post.name}
-          content={post.text}
-          avatar={post.avatar}
-          postUrl={`/post/${post._id}`}
-          postID={post._id}
-          postOwnerID={post.user}
-          userProfileUrl={`/profile/${post.user}`}
-        />
-      ))}
+      {!posts ? (
+        <Loading />
+      ) : (
+        posts.map((post, index) => (
+          <Post
+            key={index + 'post'}
+            likes={post.likes}
+            comments={post.comments}
+            username={post.name}
+            content={post.text}
+            avatar={post.avatar}
+            postUrl={`/post/${post._id}`}
+            postID={post._id}
+            postOwnerID={post.user}
+            userProfileUrl={`/profile/${post.user}`}
+          />
+        ))
+      )}
     </RouteWrapper>
   )
 }
