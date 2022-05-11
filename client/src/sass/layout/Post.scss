@@ -1,9 +1,9 @@
 .post {
   width: 100%;
   margin: auto;
-  opacity: 0;
+  // opacity: 0;
   @include card;
-  animation: postFade 100ms ease forwards 100ms;
+  // animation: postFade 100ms ease forwards 100ms;
   @media only screen and (max-width: $breakpoint-tablet-lg) {
     // width: 85.5%;
   }

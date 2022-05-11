@@ -42,6 +42,7 @@ function Post(props) {
   }, [auth])
 
   const handleLike = async () => {
+    if (!auth && !auth.user) return
     try {
       const hasLiked = hasUserLiked(postLikes)
       let url

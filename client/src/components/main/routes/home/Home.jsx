@@ -8,9 +8,10 @@ import { capitalizeFirstLetter } from '../../../../utilities/utilities'
 import RouteWrapper from '../../../layout/RouteWrapper'
 import Post from '../../../layout/Post'
 import Loading from '../../Loading'
+import { getAllPosts } from '../../../../actions/posts'
 
 const Home = (props) => {
-  const { auth } = props
+  const { auth, allPosts, getAllPosts } = props
   const { user, isAuthenticated, loading } = auth
   const navigate = useNavigate()
   const splitNameArr =
@@ -18,16 +19,9 @@ const Home = (props) => {
   const firstName = capitalizeFirstLetter(splitNameArr[0])
   const lastName = capitalizeFirstLetter(splitNameArr[1])
 
-  const [posts, setPosts] = useState([])
-
   useEffect(() => {
-    axios({
-      url: 'api/posts',
-      method: 'get',
-    }).then((res) => {
-      setPosts(res.data)
-    })
-  }, [])
+    getAllPosts()
+  }, [getAllPosts])
 
   return (
     <RouteWrapper id={'home'} className={'home'}>
@@ -45,10 +39,10 @@ const Home = (props) => {
         </div>
       </div>
 
-      {!posts ? (
+      {!allPosts ? (
         <Loading />
       ) : (
-        posts.map((post, index) => (
+        allPosts.map((post, index) => (
           <Post
             key={index + 'post'}
             likes={post.likes}
@@ -68,7 +62,8 @@ const Home = (props) => {
 }
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  allPosts: state.posts.allPosts,
 })
 
 // export default Home
-export default connect(mapStateToProps, null)(Home)
+export default connect(mapStateToProps, { getAllPosts })(Home)

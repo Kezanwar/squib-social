@@ -18,3 +18,8 @@ export const AUTH = {
 export const PROFILE = {
   GET_PROFILE: 'GET_PROFILE',
 }
+
+export const POSTS = {
+  GET_ALL_POSTS: 'GET_ALL_POSTS',
+  GET_ALL_POSTS_ERROR: 'GET_ALL_POSTS_ERROR',
+}
