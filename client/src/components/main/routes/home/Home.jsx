@@ -23,6 +23,8 @@ const Home = (props) => {
     getAllPosts()
   }, [getAllPosts])
 
+  console.log(allPosts)
+
   return (
     <RouteWrapper id={'home'} className={'home'}>
       <div className="yourFeedContainer">
@@ -54,6 +56,7 @@ const Home = (props) => {
             postID={post._id}
             postOwnerID={post.user}
             userProfileUrl={`/profile/${post.user}`}
+            date={post.date}
           />
         ))
       )}
