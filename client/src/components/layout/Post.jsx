@@ -18,6 +18,7 @@ function Post(props) {
     postUrl,
     userProfileUrl,
     auth,
+    date,
   } = props
 
   const [postLikes, setPostLikes] = useState(likes)
@@ -77,7 +78,9 @@ function Post(props) {
       <Link to={getProfileLink()}>
         <div className="userInfoContainer">
           <img className="avatar" src={avatar} alt="userImg" />
-          <h5 className="username">{username}</h5>
+          <h5 className="username">
+            {username} <p className="date"> {date}</p>{' '}
+          </h5>
         </div>
       </Link>
       <p className="content">{content}</p>
