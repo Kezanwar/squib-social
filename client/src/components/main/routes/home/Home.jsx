@@ -23,8 +23,6 @@ const Home = (props) => {
     getAllPosts()
   }, [getAllPosts])
 
-  console.log(allPosts)
-
   return (
     <RouteWrapper id={'home'} className={'home'}>
       <div className="yourFeedContainer">

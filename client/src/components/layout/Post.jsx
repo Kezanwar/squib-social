@@ -66,6 +66,55 @@ function Post(props) {
     else return `/profile/${postOwnerID}`
   }
 
+  const postDate = new Date(date)
+  const todayDate = new Date()
+
+  const postDateObj = {
+    day: postDate.getDate(),
+    month: postDate.getMonth(),
+    year: postDate.getFullYear(),
+    ISODateAndTimeArr: postDate.toISOString().split('T'),
+    timeArr: function () {
+      return this.ISODateAndTimeArr[1].split(':')
+    },
+    getTime: function () {
+      let [hour, min] = this.timeArr()
+      return `${hour}:${min}`
+    },
+    dateArr: function () {
+      return this.ISODateAndTimeArr[0].split('-')
+    },
+    getShortDate: function () {
+      let [year, month, day] = this.dateArr()
+      month = month < 10 ? month.slice(-1) : month
+      year = year.slice(-2)
+      return `${day}/${month}/${year}`
+    },
+  }
+
+  const todayDateObj = {
+    day: todayDate.getDate(),
+    month: todayDate.getMonth(),
+    year: todayDate.getFullYear(),
+  }
+
+  const renderDateText = () => {
+    if (
+      todayDateObj.day === postDateObj.day &&
+      todayDateObj.month === postDateObj.month &&
+      todayDateObj.year === postDateObj.year
+    ) {
+      return `Today @ ${postDateObj.getTime()}`
+    }
+    if (
+      todayDateObj.day - 1 === postDateObj.day &&
+      todayDateObj.month === postDateObj.month &&
+      todayDateObj.year === postDateObj.year
+    ) {
+      return `Yesterday @ ${postDateObj.getTime()}`
+    } else return `${postDateObj.getShortDate()} @ ${postDateObj.getTime()}`
+  }
+
   return (
     <motion.article
       transition={{ duration: 0, ease: 'easeOut' }}
@@ -79,7 +128,7 @@ function Post(props) {
         <div className="userInfoContainer">
           <img className="avatar" src={avatar} alt="userImg" />
           <h5 className="username">
-            {username} <p className="date"> {date}</p>{' '}
+            {username} <p className="date"> {renderDateText()}</p>{' '}
           </h5>
         </div>
       </Link>
