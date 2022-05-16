@@ -14,27 +14,50 @@ const Home = (props) => {
   const { auth, allPosts, getAllPosts } = props
   const { user, isAuthenticated, loading } = auth
   const navigate = useNavigate()
-  const splitNameArr =
-    user && user.name ? user.name.split(' ') : ['John', 'Doe']
-  const firstName = capitalizeFirstLetter(splitNameArr[0])
-  const lastName = capitalizeFirstLetter(splitNameArr[1])
 
   useEffect(() => {
     getAllPosts()
   }, [getAllPosts])
+
+  const renderName = () => {
+    if (!user)
+      return (
+        <p
+          className="blue-link name"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/login')}
+        >
+          Login / Sign Up 👉🏼
+        </p>
+      )
+    else {
+      const splitNameArr =
+        user && user.name ? user.name.split(' ') : ['John', 'Doe']
+      const firstName = capitalizeFirstLetter(splitNameArr[0])
+      const lastName = capitalizeFirstLetter(splitNameArr[1])
+      return (
+        <p
+          className="name"
+          onClick={() => navigate('/profile')}
+        >{`${firstName} ${lastName}`}</p>
+      )
+    }
+  }
 
   return (
     <RouteWrapper id={'home'} className={'home'}>
       <div className="yourFeedContainer">
         <h1 className="title">
           Home
-          <p> {firstName + ' ' + lastName}</p>
+          {renderName()}
         </h1>
         <div className="nameAndCreatePostContainer">
-          <button onClick={() => navigate('/post/new')} className="blue-link">
+          <button
+            onClick={() => navigate(user ? '/post/new' : '/login')}
+            className="blue-link"
+          >
             New post ✍🏽
           </button>
-
           {/* <img className="avatar" src={userObj.avatar} alt="avatar" /> */}
         </div>
       </div>

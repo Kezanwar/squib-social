@@ -14,7 +14,9 @@ const Login = ({ setAlert, loginUser, auth }) => {
 
   useEffect(() => {
     if (user) {
-      navigate('/profile')
+      setTimeout(() => {
+        navigate('/profile')
+      }, 250)
       return
     }
   }, [user])
@@ -35,7 +37,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
       password: form.password,
     }
 
-    loginUser(userDetails, () => navigate('/profile'))
+    loginUser(userDetails)
   }
 
   const handleInput = (e) => {
@@ -78,8 +80,12 @@ const Login = ({ setAlert, loginUser, auth }) => {
             />
           </div>
 
-          <p onClick={() => navigate('/register')} className="sub-title signinMsg">
-            Don't have an account? <span className="blue-link">Create an account 🤙🏽</span>
+          <p
+            onClick={() => navigate('/register')}
+            className="sub-title signinMsg"
+          >
+            Don't have an account?{' '}
+            <span className="blue-link">Create an account 🤙🏽</span>
           </p>
           <button onClick={handleSubmit} className="submitBtn" type="submit">
             Sign in
