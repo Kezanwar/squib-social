@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { HEADERS } from '../../utilities/axiosConfig'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Post(props) {
   const {
@@ -23,6 +23,8 @@ function Post(props) {
 
   const [postLikes, setPostLikes] = useState(likes)
   const [liked, setLiked] = useState(false)
+
+  const navigate = useNavigate()
 
   const hasUserLiked = (likesArr) => {
     if (!auth || !auth.user) return false
@@ -43,7 +45,10 @@ function Post(props) {
   }, [auth])
 
   const handleLike = async () => {
-    if (!auth && !auth.user) return
+    if (!auth.user) {
+      navigate('/login')
+      return
+    }
     try {
       const hasLiked = hasUserLiked(postLikes)
       let url

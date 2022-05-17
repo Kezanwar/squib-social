@@ -14,9 +14,8 @@ const Login = ({ setAlert, loginUser, auth }) => {
 
   useEffect(() => {
     if (user) {
-      setTimeout(() => {
-        navigate('/profile')
-      }, 250)
+      navigate('/profile')
+
       return
     }
   }, [user])
@@ -37,7 +36,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
       password: form.password,
     }
 
-    loginUser(userDetails)
+    loginUser(userDetails, () => navigate('/'))
   }
 
   const handleInput = (e) => {
