@@ -80,7 +80,7 @@ export const loginUser = (user, relocate) => async (dispatch) => {
       type: AUTH.LOGIN_SUCCESS,
       payload: res.data,
     })
-    relocate()
+    // relocate()
   } catch (err) {
     const errData = err?.response?.data
     dispatch({
