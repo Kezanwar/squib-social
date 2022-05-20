@@ -57,7 +57,7 @@ function Post(props) {
       const res = await axios({
         url: url,
         method: 'put',
-        headers: HEADERS.AUTH,
+        headers: HEADERS.AUTH(),
       })
       setPostLikes(res.data)
       setLiked(hasUserLiked(res.data) ? true : false)

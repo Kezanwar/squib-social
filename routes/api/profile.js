@@ -18,7 +18,8 @@ router.get('/me', auth, async (req, res) => {
       ['name', 'avatar']
       // dont send activity
     )
-    if (!profile) return res.status(400).json({ msg: 'There is no profile for this user' })
+    if (!profile)
+      return res.status(400).json({ msg: 'There is no profile for this user' })
     else {
       res.send(profile)
     }
@@ -45,7 +46,16 @@ router.post(
     const errors = validationResult(req)
     if (!errors.isEmpty()) return res.status(400).json(errors)
 
-    const { bio, status, website, location, username, twitter, instagram, linkedin } = req.body
+    const {
+      bio,
+      status,
+      website,
+      location,
+      username,
+      twitter,
+      instagram,
+      linkedin,
+    } = req.body
 
     // build profile object
 
@@ -115,7 +125,8 @@ router.get('/user/:user_id', async (req, res) => {
   } catch (err) {
     console.log(err)
     // if error is because of the user ObjectID being wrong format - send same error as above
-    if (err.kind === 'ObjectId') return res.status(400).json({ msg: 'Profile not found' })
+    if (err.kind === 'ObjectId')
+      return res.status(400).json({ msg: 'Profile not found' })
     res.status(500).send('server error')
   }
 })
@@ -192,7 +203,9 @@ router.delete('/', auth, async (req, res) => {
 router.get('/me/::specific_field', auth, async (req, res) => {
   try {
     const param = req.params.specific_field
-    const profileField = await Profile.findOne({ user: req.user.id }).select(`${param}`)
+    const profileField = await Profile.findOne({ user: req.user.id }).select(
+      `${param}`
+    )
     if (!profileField) return res.json({ msg: 'No profile for this user' })
     else return res.json(profileField)
   } catch (error) {

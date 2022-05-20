@@ -14,7 +14,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
 
   useEffect(() => {
     if (user) {
-      navigate('/profile')
+      navigate('/')
 
       return
     }
@@ -36,7 +36,7 @@ const Login = ({ setAlert, loginUser, auth }) => {
       password: form.password,
     }
 
-    loginUser(userDetails, () => navigate('/'))
+    loginUser(userDetails)
   }
 
   const handleInput = (e) => {

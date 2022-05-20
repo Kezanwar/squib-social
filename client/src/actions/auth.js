@@ -11,7 +11,7 @@ export const loadUser = () => async (dispatch) => {
     const res = await axios({
       url: 'api/auth',
       method: 'get',
-      headers: HEADERS.AUTH,
+      headers: HEADERS.AUTH(),
     })
     if (res.data) {
       dispatch({
@@ -80,7 +80,7 @@ export const loginUser = (user, relocate) => async (dispatch) => {
       type: AUTH.LOGIN_SUCCESS,
       payload: res.data,
     })
-    relocate()
+    // relocate()
   } catch (err) {
     const errData = err?.response?.data
     dispatch({
