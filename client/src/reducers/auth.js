@@ -18,10 +18,11 @@ function authReducer(state = initialState, action) {
       }
     case AUTH.REGISTER_SUCCESS:
     case AUTH.LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.token)
+      window.localStorage.setItem('token', payload.token)
       console.log(payload)
       return {
         ...state,
+        token: payload.token,
         user: payload.user,
         isAuthenticated: true,
         loading: false,

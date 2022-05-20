@@ -77,10 +77,11 @@ const Profile = (props) => {
       const firstName = capitalizeFirstLetter(splitNameArr[0])
       const lastName = capitalizeFirstLetter(splitNameArr[1])
       setUserObj(user)
+
       axios({
         url: 'api/profile/me',
         method: 'get',
-        headers: HEADERS.AUTH,
+        headers: HEADERS.AUTH(),
       })
         .then((res) => {
           const {
@@ -187,7 +188,7 @@ const Profile = (props) => {
       const res = axios({
         url: 'api/profile',
         method: 'post',
-        headers: HEADERS.AUTH,
+        headers: HEADERS.AUTH(),
         data: newProfData,
       })
       console.log(res.data)
@@ -197,6 +198,8 @@ const Profile = (props) => {
       setUnsavedChangesCheck(false)
     }
   }
+
+  console.log(window.localStorage.token)
 
   if (!user && !isAuthenticated && loading) return <Loading />
   if (profLoading) return <Loading />

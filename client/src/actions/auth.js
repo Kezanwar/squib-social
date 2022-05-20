@@ -11,7 +11,7 @@ export const loadUser = () => async (dispatch) => {
     const res = await axios({
       url: 'api/auth',
       method: 'get',
-      headers: HEADERS.AUTH,
+      headers: HEADERS.AUTH(),
     })
     if (res.data) {
       dispatch({
