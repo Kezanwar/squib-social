@@ -9,3 +9,10 @@ export function capitalizeFirstLetter(string) {
 export function generateAlerts(alertArr, setAlert) {
   alertArr.forEach((error) => setAlert(error.msg, 'error'))
 }
+
+export function isAuthLoading(auth) {
+  if (auth) {
+    if (auth.loading) return true
+    else return false
+  }
+}
