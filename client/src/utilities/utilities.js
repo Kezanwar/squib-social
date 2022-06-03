@@ -14,5 +14,5 @@ export function isAuthLoading(auth) {
   if (auth) {
     if (auth.loading) return true
     else return false
-  }
+  } else return true
 }
